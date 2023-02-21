@@ -7,6 +7,13 @@ module.exports = {
     "./layouts/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: '1rem',
+      screens: {
+        sm: '450px'
+      }
+    },
     extend: {},
   },
   plugins: [],
