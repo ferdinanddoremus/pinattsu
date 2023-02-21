@@ -1,11 +1,10 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import useSWR from 'swr'
+import axios from 'axios'
 
 export default function Home() {
+  const { data, error } = useSWR('/api/rides/123456')
+
   return (
     <>
       <Head>
@@ -15,7 +14,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="py-4">
-        <p>xxx</p>
+        {data && !error ? <p>{data.id}</p> : null}
+        <button
+          type="button"
+          className="mt-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          onClick={() => {
+            axios
+              .post('/api/rides', { name: 'Test ride', date: new Date() })
+              .then(res => console.log(res))
+          }}
+        >
+          Add ride
+        </button>
       </main>
     </>
   )

@@ -1,4 +1,4 @@
-import { ReactElement, createContext, useEffect, useCallback, useState } from 'react'
+import { createContext, useEffect, useCallback, useState } from 'react'
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -6,7 +6,6 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
-  User
 } from 'firebase/auth'
 
 export const AuthContext = createContext()
@@ -20,7 +19,7 @@ export function AuthProvider({ children }) {
     return unsub
   }, [])
 
-  const authStateChanged = useCallback(async (u) => {
+  const authStateChanged = useCallback(async u => {
     setUser(u)
   }, [])
 
@@ -29,22 +28,22 @@ export function AuthProvider({ children }) {
     [auth]
   )
 
-  const signinWithGoogle = useCallback(
-    () => {
-      const provider = new GoogleAuthProvider()
-      return signInWithPopup(auth, provider)
-    },
-    [auth]
-  )
+  const signinWithGoogle = useCallback(() => {
+    const provider = new GoogleAuthProvider()
+    return signInWithPopup(auth, provider)
+  }, [auth])
 
   const signup = useCallback(
-    ({ email, password }) => createUserWithEmailAndPassword(auth, email, password),
+    ({ email, password }) =>
+      createUserWithEmailAndPassword(auth, email, password),
     [auth]
   )
   const signout = useCallback(() => signOut(auth), [auth])
 
   return (
-    <AuthContext.Provider value={{ signin, signinWithGoogle, signout, signup, user }}>
+    <AuthContext.Provider
+      value={{ signin, signinWithGoogle, signout, signup, user }}
+    >
       {children}
     </AuthContext.Provider>
   )
