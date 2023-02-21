@@ -31,4 +31,4 @@ yarn-error.log*
 # vercel
 .vercel
 
-./services/db/serviceAccountKey.json
+/services/db/serviceAccountKey.json
