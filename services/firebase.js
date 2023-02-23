@@ -12,7 +12,6 @@ const firebaseConfig = {
 }
 
 export const initFirebase = () => {
-  console.log(firebaseConfig)
   const firebaseApp =
     getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
   const firebaseAuth = !getAuth() ? initializeAuth(firebaseApp) : getAuth()

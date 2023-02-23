@@ -3,7 +3,8 @@ import useSWR from 'swr'
 import axios from 'axios'
 
 export default function Home() {
-  const { data, error } = useSWR('/api/rides/123456')
+  const { data: rides, error, mutate } = useSWR('/api/rides')
+  console.log(rides)
 
   return (
     <>
@@ -14,18 +15,28 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="py-4">
-        {data && !error ? <p>{data.id}</p> : null}
-        <button
+        {rides && !error ? (
+          <div>
+            {rides.map((ride, i) => (
+              <article key={i}>
+                <p>{ride.name}</p>
+              </article>
+            ))}
+          </div>
+        ) : null}
+        {/* <button
           type="button"
           className="mt-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           onClick={() => {
             axios
               .post('/api/rides', { name: 'Test ride', date: new Date() })
               .then(res => console.log(res))
+              .catch(err => console.error(err))
+              .finally(() => mutate())
           }}
         >
           Add ride
-        </button>
+        </button> */}
       </main>
     </>
   )
