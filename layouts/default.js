@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { UserIcon } from '@heroicons/react/24/solid'
 
-// Auth
-// import useAuth from '@/hooks/useAuth'
+// Hooks
+import useAuth from '@/hooks/useAuth'
 
 const DefaultLayout = ({ children }) => {
-  // const { user } = useAuth()
+  const { user, signout } = useAuth()
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -16,12 +16,21 @@ const DefaultLayout = ({ children }) => {
         >
           shlag
         </Link>
-        <Link
-          href={'/signin'}
-          className="rounded-full border border-gray-200 p-2 flex items-center shadow-sm hover:shadow-md"
-        >
-          <UserIcon className="text-indigo-500" width="24" height="24" />
-        </Link>
+        {user ? (
+          <button
+            className="rounded-full border border-gray-200 p-2 flex items-center shadow-sm hover:shadow-md"
+            onClick={() => signout()}
+          >
+            logout
+          </button>
+        ) : (
+          <Link
+            href={'/signin'}
+            className="rounded-full border border-gray-200 p-2 flex items-center shadow-sm hover:shadow-md"
+          >
+            <UserIcon className="text-indigo-500" width="24" height="24" />
+          </Link>
+        )}
       </nav>
       <main className="container grow">{children}</main>
       <footer className="py-5">
